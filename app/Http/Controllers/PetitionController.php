@@ -54,35 +54,7 @@ class PetitionController extends Controller
         if (Petition::where('user_id', Auth::user()->id)->exists()) {
             return redirect(route('petition.status'));
         } else {
-
-            $date = '2022-01-10';
-            //if (date('Y-m-d') < $date) {
-                $country = Country::where('status', 1)->get();
-                $typeschool = Typeschool::all();
-                $endegree = Endegree::all();
-                $faculties = Faculty::where('status', 1)->get();
-                $edutypes = Edutype::all();
-                $languagetype = Languagetype::all();
-                $disability = Disability::all();
-                $high_schools = HighSchool::where('status', 1)->get();
-                // return $typeschool;
-                // return $country;
-                return view('user.pages.petition.create', [
-                    'country' => $country,
-                    'typeschool' => $typeschool,
-                    'endegree' => $endegree,
-                    'faculties' => $faculties,
-                    'edutypes' => $edutypes,
-                    'languagetype' => $languagetype,
-                    'disability' => $disability,
-                    'high_schools' => $high_schools
-                ]);
-            //}
-            //else{
-             //   return "Qabul tez orada boshlanadi.";
-           // }
-
-
+            return view('user.pages.petition.select_type_petition');
         }
 
 
@@ -153,7 +125,7 @@ class PetitionController extends Controller
      */
     public function store(Request $request)
     {
-//         return $request;
+        //         return $request;
         $pat = new Petition();
         $validator = Validator::make($request->all(), $pat->rules);
         if ($validator->fails()) {
@@ -552,7 +524,7 @@ class PetitionController extends Controller
                 // return $pat->rules_update;
                 $validator = Validator::make($request->all(), $re);
                 if ($validator->fails()) {
-//                return $request->all();
+                    //                return $request->all();
 //                     return $validator->errors();
                     return back()->withErrors($validator)->withInput();
                 } else {
@@ -560,31 +532,55 @@ class PetitionController extends Controller
                         $user = Auth::user();
                         $pet = Petition::find($id);
                         $pet->status = 0;
-                        if ($request->last_name) $pet->last_name = $request->last_name;
-                        if ($request->first_name) $pet->first_name = $request->first_name;
-                        if ($request->middle_name) $pet->middle_name = $request->middle_name;
-                        if ($request->gender) $pet->gender = $request->gender;
-                        if ($request->birth_date) $pet->birth_date = date('Y-m-d', strtotime($request->birth_date));
-                        if ($request->country_id) $pet->country_id = $request->country_id;
-                        if ($request->region_id) $pet->region_id = $request->region_id;
-                        if ($request->area_id) $pet->area_id = $request->area_id;
-                        if ($request->address) $pet->address = $request->address;
-                        if ($request->citizenship) $pet->citizenship = $request->citizenship;
-                        if ($request->nationality) $pet->nationality = $request->nationality;
-                        if ($request->passport_seria) $pet->passport_seria = str_replace(' ', '', $request->passport_seria);
-                        if ($request->passport_given_place) $pet->passport_given_place = $request->passport_given_place;
-                        if ($request->home_phone) $pet->home_phone = $request->home_phone;
-                        if ($request->mobile_phone) $pet->mobile_phone = $request->mobile_phone;
-                        if ($request->father_phone) $pet->father_phone = $request->father_phone;
-                        if ($request->mother_phone) $pet->mother_phone = $request->mother_phone;
-                        if ($request->school) $pet->school = $request->school;
-                        if ($request->type_school) $pet->type_school = $request->type_school;
-                        if ($request->graduation_date) $pet->graduation_date = $request->graduation_date;
-                        if ($request->diplom_number) $pet->diplom_number = $request->diplom_number;
-                        if ($request->english_degree) $pet->english_degree = $request->english_degree;
+                        if ($request->last_name)
+                            $pet->last_name = $request->last_name;
+                        if ($request->first_name)
+                            $pet->first_name = $request->first_name;
+                        if ($request->middle_name)
+                            $pet->middle_name = $request->middle_name;
+                        if ($request->gender)
+                            $pet->gender = $request->gender;
+                        if ($request->birth_date)
+                            $pet->birth_date = date('Y-m-d', strtotime($request->birth_date));
+                        if ($request->country_id)
+                            $pet->country_id = $request->country_id;
+                        if ($request->region_id)
+                            $pet->region_id = $request->region_id;
+                        if ($request->area_id)
+                            $pet->area_id = $request->area_id;
+                        if ($request->address)
+                            $pet->address = $request->address;
+                        if ($request->citizenship)
+                            $pet->citizenship = $request->citizenship;
+                        if ($request->nationality)
+                            $pet->nationality = $request->nationality;
+                        if ($request->passport_seria)
+                            $pet->passport_seria = str_replace(' ', '', $request->passport_seria);
+                        if ($request->passport_given_place)
+                            $pet->passport_given_place = $request->passport_given_place;
+                        if ($request->home_phone)
+                            $pet->home_phone = $request->home_phone;
+                        if ($request->mobile_phone)
+                            $pet->mobile_phone = $request->mobile_phone;
+                        if ($request->father_phone)
+                            $pet->father_phone = $request->father_phone;
+                        if ($request->mother_phone)
+                            $pet->mother_phone = $request->mother_phone;
+                        if ($request->school)
+                            $pet->school = $request->school;
+                        if ($request->type_school)
+                            $pet->type_school = $request->type_school;
+                        if ($request->graduation_date)
+                            $pet->graduation_date = $request->graduation_date;
+                        if ($request->diplom_number)
+                            $pet->diplom_number = $request->diplom_number;
+                        if ($request->english_degree)
+                            $pet->english_degree = $request->english_degree;
 
-                        if ($request->overall_score_english) $pet->overall_score_english = $request->overall_score_english;
-                        if ($request->ilts_number) $pet->ilts_number = $request->ilts_number;
+                        if ($request->overall_score_english)
+                            $pet->overall_score_english = $request->overall_score_english;
+                        if ($request->ilts_number)
+                            $pet->ilts_number = $request->ilts_number;
                         if (in_array('overall_score_english', $es_arr)) {
                             if (!$request->overall_score_english) {
                                 $pet->overall_score_english = '';
@@ -595,12 +591,18 @@ class PetitionController extends Controller
                                 $pet->ilts_number = '';
                             }
                         }
-                        if ($request->faculty_id) $pet->faculty_id = $request->faculty_id;
-                        if ($request->high_school_id) $pet->high_school_id = $request->high_school_id;
-                        if ($request->type_education_id) $pet->type_education_id = $request->type_education_id;
-                        if ($request->type_language_id) $pet->type_language_id = $request->type_language_id;
-                        if ($request->disability_status_id) $pet->disability_status_id = $request->disability_status_id;
-                        if ($request->disability_description) $pet->disability_description = $request->disability_description;
+                        if ($request->faculty_id)
+                            $pet->faculty_id = $request->faculty_id;
+                        if ($request->high_school_id)
+                            $pet->high_school_id = $request->high_school_id;
+                        if ($request->type_education_id)
+                            $pet->type_education_id = $request->type_education_id;
+                        if ($request->type_language_id)
+                            $pet->type_language_id = $request->type_language_id;
+                        if ($request->disability_status_id)
+                            $pet->disability_status_id = $request->disability_status_id;
+                        if ($request->disability_description)
+                            $pet->disability_description = $request->disability_description;
                         //images store
                         $nomiga = $this->randomPassword() . '_' . $pet->passport_seria;
                         if ($request->hasFile('image')) {
@@ -980,6 +982,55 @@ class PetitionController extends Controller
     public function destroy(Petition $petition)
     {
         //
+    }
+
+    public function petition_magistr()
+    {
+        $country = Country::where('status', 1)->get();
+        $typeschool = Typeschool::all();
+        $endegree = Endegree::all();
+        // $faculties = Faculty::where('status', 1)->get();
+        $faculties = [];
+        $edutypes = Edutype::all();
+        $languagetype = Languagetype::all();
+        $disability = Disability::all();
+        $high_schools = HighSchool::where('status', 1)->where('degree', 2)->get();
+        // return $typeschool;
+        // return $country;
+        return view('user.pages.petition.create_magistr', [
+            'country' => $country,
+            'typeschool' => $typeschool,
+            'endegree' => $endegree,
+            'faculties' => $faculties,
+            'edutypes' => $edutypes,
+            'languagetype' => $languagetype,
+            'disability' => $disability,
+            'high_schools' => $high_schools
+        ]);
+    }
+
+    public function petition_bakalavr()
+    {
+        $country = Country::where('status', 1)->get();
+        $typeschool = Typeschool::all();
+        $endegree = Endegree::all();
+        $faculties = Faculty::where('status', 1)->get();
+        $edutypes = Edutype::all();
+        $languagetype = Languagetype::all();
+        $disability = Disability::all();
+        $high_schools = HighSchool::where('status', 1)->where('degree', 1)->get();
+        // return $typeschool;
+        // return $country;
+        return view('user.pages.petition.create', [
+            'country' => $country,
+            'typeschool' => $typeschool,
+            'endegree' => $endegree,
+            'faculties' => $faculties,
+            'edutypes' => $edutypes,
+            'languagetype' => $languagetype,
+            'disability' => $disability,
+            'high_schools' => $high_schools
+        ]);
     }
 
 

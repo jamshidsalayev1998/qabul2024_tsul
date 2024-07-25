@@ -78,6 +78,9 @@ Route::group(
             Route::get('/application-show/{id}', 'PetitionController@show')->name('petition.show');
             Route::get('/application-edit/{id}', 'PetitionController@edit')->name('petition.edit');
             Route::get('/application-print/{id}', 'PetitionController@to_pdf')->name('petition.pdf');
+
+            Route::get('/application-bakalavr', 'PetitionController@petition_bakalavr')->name('petition_for_bakalavr');
+            Route::get('/application-magistr', 'PetitionController@petition_magistr')->name('petition_for_magistr');
         });
 
 
