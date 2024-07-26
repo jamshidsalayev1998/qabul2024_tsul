@@ -16,7 +16,7 @@ class FacultyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function get_faculties_by_high_school($id){
-        $faculties = Faculty::where('high_school_id' , $id)->where('status' , 1)->get();
+        $faculties = Faculty::where('high_school_id' , $id)->where('status' , 1)->with('one_faculty_type_edu.edu_type')->with('one_faculty_type_lang.type_language')->get();
         return json_encode($faculties);
     }
     public function change_faculty_status($id , $value){

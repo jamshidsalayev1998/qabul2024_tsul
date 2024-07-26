@@ -132,9 +132,11 @@ class PetitionController extends Controller
             return back()->withErrors($validator)->withInput();
         } else {
             if (Auth::check() && Auth::user()->role == 0) {
+                $faculty = Faculty::find($request->faculty_id);
                 $user = Auth::user();
                 $pet = new Petition();
                 $pet->user_id = $user->id;
+                $pet->degree = $request->degree;
                 $pet->last_name = $request->last_name;
                 $pet->first_name = $request->first_name;
                 $pet->middle_name = $request->middle_name;
@@ -160,8 +162,8 @@ class PetitionController extends Controller
                 $pet->overall_score_english = $request->overall_score_english;
                 $pet->ilts_number = $request->ilts_number;
                 $pet->faculty_id = $request->faculty_id;
-                $pet->type_education_id = $request->type_education_id;
-                $pet->type_language_id = $request->type_language_id;
+                $pet->type_education_id = $faculty->one_faculty_type_edu->type_education_id;
+                $pet->type_language_id = $faculty->one_faculty_type_lang->type_language_id;
                 $pet->disability_status_id = $request->disability_status_id;
                 $pet->disability_description = $request->disability_description;
                 $pet->high_school_id = $request->high_school_id;
@@ -403,7 +405,7 @@ class PetitionController extends Controller
             $edp = FacultyTypeEdu::where('faculty_id', $p->faculty_id)->pluck('type_education_id');
             $edutypes = Edutype::whereIn('id', $edp)->get();
             $edl = FacultyTypeLang::where('faculty_id', $p->faculty_id)->pluck('type_language_id');
-            $high_schools = HighSchool::where('status', 1)->get();
+            $high_schools = HighSchool::where('status', 1)->where('degree', $p->degree)->get();
             $faculties = Faculty::where('status', 1)->where('high_school_id', $p->high_school_id)->get();
 
 
@@ -418,20 +420,37 @@ class PetitionController extends Controller
                 $i++;
             }
             if ($p->status != 2) {
-                return view('user.pages.petition.edit', [
-                    'petition' => $p,
-                    'country' => $country,
-                    'regions' => $regions,
-                    'areas' => $areas,
-                    'typeschool' => $typeschool,
-                    'endegree' => $endegree,
-                    'faculties' => $faculties,
-                    'edutypes' => $edutypes,
-                    'languagetype' => $languagetype,
-                    'disability' => $disability,
-                    'edits' => $a,
-                    'high_schools' => $high_schools
-                ]);
+                if ($p->degree == 1) {
+                    return view('user.pages.petition.edit', [
+                        'petition' => $p,
+                        'country' => $country,
+                        'regions' => $regions,
+                        'areas' => $areas,
+                        'typeschool' => $typeschool,
+                        'endegree' => $endegree,
+                        'faculties' => $faculties,
+                        'edutypes' => $edutypes,
+                        'languagetype' => $languagetype,
+                        'disability' => $disability,
+                        'edits' => $a,
+                        'high_schools' => $high_schools
+                    ]);
+                } else {
+                    return view('user.pages.petition.edit_magistr', [
+                        'petition' => $p,
+                        'country' => $country,
+                        'regions' => $regions,
+                        'areas' => $areas,
+                        'typeschool' => $typeschool,
+                        'endegree' => $endegree,
+                        'faculties' => $faculties,
+                        'edutypes' => $edutypes,
+                        'languagetype' => $languagetype,
+                        'disability' => $disability,
+                        'edits' => $a,
+                        'high_schools' => $high_schools
+                    ]);
+                }
             } else {
                 return redirect(url()->previous());
             }
@@ -494,8 +513,8 @@ class PetitionController extends Controller
                 'diplom_image' => ['required', 'max:4000'],
                 'image' => ['required', 'image', 'max:4000'],
                 'faculty_id' => ['required', 'regex: /^[0-9]*$/'],
-                'type_education_id' => ['required', 'regex: /^[0-9]*$/'],
-                'type_language_id' => ['required', 'regex: /^[0-9]*$/'],
+                // 'type_education_id' => ['required', 'regex: /^[0-9]*$/'],
+                // 'type_language_id' => ['required', 'regex: /^[0-9]*$/'],
                 'disability_status_id' => ['required', 'regex: /^[0-9]*$/'],
                 'english_image' => ['max:4000'],
             ];
@@ -591,14 +610,14 @@ class PetitionController extends Controller
                                 $pet->ilts_number = '';
                             }
                         }
-                        if ($request->faculty_id)
+                        if ($request->faculty_id) {
                             $pet->faculty_id = $request->faculty_id;
+                            $selectedFaculty = Faculty::find($request->faculty_id);
+                            $pet->type_education_id = $selectedFaculty->one_faculty_type_edu->type_education_id;
+                            $pet->type_language_id = $selectedFaculty->one_faculty_type_lang->type_language_id;
+                        }
                         if ($request->high_school_id)
                             $pet->high_school_id = $request->high_school_id;
-                        if ($request->type_education_id)
-                            $pet->type_education_id = $request->type_education_id;
-                        if ($request->type_language_id)
-                            $pet->type_language_id = $request->type_language_id;
                         if ($request->disability_status_id)
                             $pet->disability_status_id = $request->disability_status_id;
                         if ($request->disability_description)
@@ -991,8 +1010,10 @@ class PetitionController extends Controller
         $endegree = Endegree::all();
         // $faculties = Faculty::where('status', 1)->get();
         $faculties = [];
-        $edutypes = Edutype::all();
-        $languagetype = Languagetype::all();
+        // $edutypes = [];
+        $edutypes = Edutype::where('id', 1)->get();
+        // $languagetype = [];
+        $languagetype = Languagetype::where('id', 2)->get();
         $disability = Disability::all();
         $high_schools = HighSchool::where('status', 1)->where('degree', 2)->get();
         // return $typeschool;
@@ -1014,9 +1035,12 @@ class PetitionController extends Controller
         $country = Country::where('status', 1)->get();
         $typeschool = Typeschool::all();
         $endegree = Endegree::all();
-        $faculties = Faculty::where('status', 1)->get();
-        $edutypes = Edutype::all();
-        $languagetype = Languagetype::all();
+        // $faculties = Faculty::where('status', 1)->get();
+        $faculties = [];
+        $edutypes = [];
+        // $edutypes = Edutype::all();
+        $languagetype = [];
+        // $languagetype = Languagetype::all();
         $disability = Disability::all();
         $high_schools = HighSchool::where('status', 1)->where('degree', 1)->get();
         // return $typeschool;

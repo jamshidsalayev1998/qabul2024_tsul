@@ -44,4 +44,11 @@ class Faculty extends Model
     public function high_school(){
         return $this->belongsTo(HighSchool::class , 'high_school_id' , 'id');
     }
+
+    public function one_faculty_type_edu(){
+        return $this->hasOne(FacultyTypeEdu::class , 'faculty_id' , 'id');
+    }
+    public function one_faculty_type_lang(){
+        return $this->hasOne(FacultyTypeLang::class , 'faculty_id' , 'id');
+    }
 }

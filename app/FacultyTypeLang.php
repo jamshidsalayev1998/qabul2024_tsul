@@ -11,4 +11,8 @@ class FacultyTypeLang extends Model
     	'faculty_id',
     	'type_language_id',
     ];
+
+    public function type_language(){
+        return $this->belongsTo(Languagetype::class , 'type_language_id' , 'id');
+    }
 }

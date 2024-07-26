@@ -197,7 +197,7 @@
           var locale = '{{ App::getLocale() }}';
           var name_l = 'name_'+locale;
           $.each(regions , function(key, value) {
-            html += '<option value="'+value['id']+'">'+value[name_l]+'</option>';
+            html += '<option value="'+value['id']+'" edutype="'+value['one_faculty_type_edu']['edu_type'][name_l]+'" edulang="'+value['one_faculty_type_lang']['type_language'][name_l]+'">'+value[name_l]+'</option>';
           });
           $('#faculty').html(html);
         }

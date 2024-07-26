@@ -289,7 +289,7 @@ unset($__errorArgs, $__bag); ?>
 
             <div class="form_one">
                 <div class="top">
-                    <b><?php echo app('translator')->get('petition.Passport Information'); ?></b>
+                    <b><?php echo app('translator')->get('petition.Zagran passport info'); ?></b>
                 </div>
                 <div class="row">
                     <div class="col-md-6 bor_right">
@@ -619,8 +619,8 @@ unset($__errorArgs, $__bag); ?>
                                 </b></h2>
                             <select class="form-control" name="english_degree">
                                 <?php $__currentLoopData = $endegree; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option <?php if(old('endegree') == $item): ?> selected <?php endif; ?>
-                                        value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
+                                    <option <?php if(old('endegree') == $item): ?> selected <?php endif; ?> value="<?php echo e($item->id); ?>">
+                                        <?php echo e($item->$name_l); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
@@ -686,8 +686,8 @@ unset($__errorArgs, $__bag); ?>
                             <select class="form-control" id="high_school" name="high_school_id" style="width: 100%;">
                                 <option value="">-----</option>
                                 <?php $__currentLoopData = $high_schools; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option <?php if(old('high_school_id') == $item->id): ?> selected <?php endif; ?>
-                                        value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
+                                    <option <?php if(old('high_school_id') == $item->id): ?> selected <?php endif; ?> value="<?php echo e($item->id); ?>">
+                                        <?php echo e($item->$name_l); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
@@ -710,85 +710,22 @@ unset($__errorArgs, $__bag); ?>
                             <select class="form-control" id="faculty" name="faculty_id" style="width: 100%;">
                                 <option value="">-----</option>
                                 <?php $__currentLoopData = $faculties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option <?php if(old('faculty_id') == $item->id): ?> selected <?php endif; ?>
-                                        value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
+                                    <option <?php if(old('faculty_id') == $item->id): ?> selected <?php endif; ?> value="<?php echo e($item->id); ?>"
+                                        edu_type="<?php echo e($item->one_faculty_type_edu->edu_type->$name_l); ?>">
+                                        <?php echo e($item->$name_l); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-
                         <div class="divinput">
-                            <h2><?php echo app('translator')->get('petition.Type of Education'); ?> <span class="color-red">*</span>
-                                <b>
-                                    <?php $__errorArgs = ['type_education_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                        ! <?php echo e($message); ?>
-
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </b>
-                            </h2>
-                            <select class="form-control" id="faculty_type_edu" name="type_education_id"
-                                style="width: 100%;">
-                                <?php $__currentLoopData = $edutypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option <?php if(old('type_education_id') == $item): ?> selected <?php endif; ?>
-                                        value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php if(old('faculty_id')): ?>
-                                    <?php
-                                        $ar = ('App\FacultyTypeEdu')
-                                            ::where('faculty_id', old('faculty_id'))
-                                            ->pluck('type_education_id');
-                                        $regions = ('App\Edutype')::whereIn('id', $ar)->get();
-                                    ?>
-                                    <?php $__currentLoopData = $regions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option <?php if(old('type_education_id') == $item->id): ?> selected <?php endif; ?>
-                                            value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
-                            </select>
+                            <h2><?php echo app('translator')->get('petition.Type of Education'); ?> : <span id="edutypewrite" ></span></h2>
                         </div>
-
                         <div class="divinput">
-                            <h2><?php echo app('translator')->get('petition.Language of further education'); ?> <span class="color-red">*</span>
-                                <b>
-                                    <?php $__errorArgs = ['type_language_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                        ! <?php echo e($message); ?>
-
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </b>
-                            </h2>
-                            <select class="form-control" id="faculty_type_lang" name="type_language_id"
-                                style="width: 100%;">
-                                <?php $__currentLoopData = $languagetype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option <?php if(old('type_language_id') == $item): ?> selected <?php endif; ?>
-                                        value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php if(old('faculty_id')): ?>
-                                    <?php
-                                        $ar = ('App\FacultyTypeLang')
-                                            ::where('faculty_id', old('faculty_id'))
-                                            ->pluck('type_language_id');
-                                        $regions = ('App\Languagetype')::whereIn('id', $ar)->get();
-                                    ?>
-                                    <?php $__currentLoopData = $regions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option <?php if(old('type_language_id') == $item->id): ?> selected <?php endif; ?>
-                                            value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
-                            </select>
+                            <h2><?php echo app('translator')->get('petition.Language of further education'); ?> : <span id="edulangwrite"></span></h2>
                         </div>
+
+
+
+                        
 
 
                     </div>
@@ -796,6 +733,9 @@ unset($__errorArgs, $__bag); ?>
 
                 </div>
             </div>
+            <input value="2" name="degree" hidden>
+            <input value="1" name="type_education_id" hidden>
+            <input value="2" name="type_language_id" hidden>
 
             <div class="send">
                 <button type="submit" class="send_btn"><?php echo app('translator')->get('petition.Send'); ?></button>
@@ -811,6 +751,18 @@ unset($__errorArgs, $__bag); ?>
     <script type="text/javascript">
         var notf = "<?php echo app('translator')->get('petition.Please select file size smaller from 4Mb'); ?>";
         $(document).ready(function() {
+            $('#faculty').change(function() {
+                var selectedOption = $(this).find('option:selected');
+                var eduType = selectedOption.attr('edutype');
+                var lang = selectedOption.attr('edulang');
+
+                if (eduType) {
+                    $('#edutypewrite').text(eduType);
+                }
+                if (lang) {
+                    $('#edulangwrite').text(lang);
+                }
+            });
             $('#image_doc').bind('change', function() {
                 var a = (this.files[0].size);
                 // alert(a);

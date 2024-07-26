@@ -203,7 +203,7 @@
 
             <div class="form_one">
                 <div class="top">
-                    <b>@lang('petition.Passport Information')</b>
+                    <b>@lang('petition.Zagran passport info')</b>
                 </div>
                 <div class="row">
                     <div class="col-md-6 bor_right">
@@ -454,8 +454,8 @@
                                 </b></h2>
                             <select class="form-control" name="english_degree">
                                 @foreach ($endegree as $item)
-                                    <option @if (old('endegree') == $item) selected @endif
-                                        value="{{ $item->id }}">{{ $item->$name_l }}</option>
+                                    <option @if (old('endegree') == $item) selected @endif value="{{ $item->id }}">
+                                        {{ $item->$name_l }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -513,8 +513,8 @@
                             <select class="form-control" id="high_school" name="high_school_id" style="width: 100%;">
                                 <option value="">-----</option>
                                 @foreach ($high_schools as $item)
-                                    <option @if (old('high_school_id') == $item->id) selected @endif
-                                        value="{{ $item->id }}">{{ $item->$name_l }}</option>
+                                    <option @if (old('high_school_id') == $item->id) selected @endif value="{{ $item->id }}">
+                                        {{ $item->$name_l }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -529,13 +529,22 @@
                             <select class="form-control" id="faculty" name="faculty_id" style="width: 100%;">
                                 <option value="">-----</option>
                                 @foreach ($faculties as $item)
-                                    <option @if (old('faculty_id') == $item->id) selected @endif
-                                        value="{{ $item->id }}">{{ $item->$name_l }}</option>
+                                    <option @if (old('faculty_id') == $item->id) selected @endif value="{{ $item->id }}"
+                                        edu_type="{{ $item->one_faculty_type_edu->edu_type->$name_l }}">
+                                        {{ $item->$name_l }}</option>
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="divinput">
+                            <h2>@lang('petition.Type of Education') : <span id="edutypewrite" ></span></h2>
+                        </div>
+                        <div class="divinput">
+                            <h2>@lang('petition.Language of further education') : <span id="edulangwrite"></span></h2>
+                        </div>
+
+
+
+                        {{-- <div class="divinput">
                             <h2>@lang('petition.Type of Education') <span class="color-red">*</span>
                                 <b>
                                     @error('type_education_id')
@@ -543,24 +552,11 @@
                                     @enderror
                                 </b>
                             </h2>
-                            <select class="form-control" id="faculty_type_edu" name="type_education_id"
-                                style="width: 100%;">
+                            <select class="form-control" name="type_education_id" style="width: 100%;">
                                 @foreach ($edutypes as $item)
-                                    <option @if (old('type_education_id') == $item) selected @endif
-                                        value="{{ $item->id }}">{{ $item->$name_l }}</option>
+                                    <option selected value="{{ $item->id }}">{{ $item->$name_l }}</option>
                                 @endforeach
-                                @if (old('faculty_id'))
-                                    @php
-                                        $ar = ('App\FacultyTypeEdu')
-                                            ::where('faculty_id', old('faculty_id'))
-                                            ->pluck('type_education_id');
-                                        $regions = ('App\Edutype')::whereIn('id', $ar)->get();
-                                    @endphp
-                                    @foreach ($regions as $item)
-                                        <option @if (old('type_education_id') == $item->id) selected @endif
-                                            value="{{ $item->id }}">{{ $item->$name_l }}</option>
-                                    @endforeach
-                                @endif
+
                             </select>
                         </div>
 
@@ -572,26 +568,13 @@
                                     @enderror
                                 </b>
                             </h2>
-                            <select class="form-control" id="faculty_type_lang" name="type_language_id"
-                                style="width: 100%;">
+                            <select class="form-control" name="type_language_id" style="width: 100%;">
                                 @foreach ($languagetype as $item)
-                                    <option @if (old('type_language_id') == $item) selected @endif
-                                        value="{{ $item->id }}">{{ $item->$name_l }}</option>
+                                    <option selected value="{{ $item->id }}">{{ $item->$name_l }}</option>
                                 @endforeach
-                                @if (old('faculty_id'))
-                                    @php
-                                        $ar = ('App\FacultyTypeLang')
-                                            ::where('faculty_id', old('faculty_id'))
-                                            ->pluck('type_language_id');
-                                        $regions = ('App\Languagetype')::whereIn('id', $ar)->get();
-                                    @endphp
-                                    @foreach ($regions as $item)
-                                        <option @if (old('type_language_id') == $item->id) selected @endif
-                                            value="{{ $item->id }}">{{ $item->$name_l }}</option>
-                                    @endforeach
-                                @endif
+
                             </select>
-                        </div>
+                        </div> --}}
 
 
                     </div>
@@ -599,6 +582,9 @@
 
                 </div>
             </div>
+            <input value="2" name="degree" hidden>
+            <input value="1" name="type_education_id" hidden>
+            <input value="2" name="type_language_id" hidden>
 
             <div class="send">
                 <button type="submit" class="send_btn">@lang('petition.Send')</button>
@@ -614,6 +600,18 @@
     <script type="text/javascript">
         var notf = "@lang('petition.Please select file size smaller from 4Mb')";
         $(document).ready(function() {
+            $('#faculty').change(function() {
+                var selectedOption = $(this).find('option:selected');
+                var eduType = selectedOption.attr('edutype');
+                var lang = selectedOption.attr('edulang');
+
+                if (eduType) {
+                    $('#edutypewrite').text(eduType);
+                }
+                if (lang) {
+                    $('#edulangwrite').text(lang);
+                }
+            });
             $('#image_doc').bind('change', function() {
                 var a = (this.files[0].size);
                 // alert(a);

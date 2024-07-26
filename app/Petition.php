@@ -36,8 +36,8 @@ class Petition extends Model
         'diplom_image' => ['required' ],
         'english_degree' => ['required'],
         'faculty_id' => 'required',
-        'type_education_id' => ['required'],
-        'type_language_id' => 'required',
+        // 'type_education_id' => ['required'],
+        // 'type_language_id' => 'required',
 //        'disability_status_id' => 'required',
         'english_image' => [],
     ];
@@ -61,8 +61,8 @@ class Petition extends Model
         'diplom_number' => ['min:2','max:255'],
         'diplom_image' => [''],
         'faculty_id' => 'regex: /^[0-9]*$/',
-        'type_education_id' => ['regex: /^[0-9]*$/'],
-        'type_language_id' => 'regex: /^[0-9]*$/',
+        // 'type_education_id' => ['regex: /^[0-9]*$/'],
+        // 'type_language_id' => 'regex: /^[0-9]*$/',
 //        'disability_status_id' => 'regex: /^[0-9]*$/',
         'english_image' => [],
     ];
