@@ -1,11 +1,10 @@
-@extends('admin.layouts.for_user_show')
-@section('style')
-@endsection
-@section('content')
-    @php
+<?php $__env->startSection('style'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php
         $locale = App::getLocale();
         $name_l = 'name_' . $locale;
-    @endphp
+    ?>
     <style type="text/css">
         .error {
             color: red;
@@ -73,7 +72,7 @@
             animation-duration: 0.6s;
         }
 
-        @keyframes zoom {
+        @keyframes  zoom {
             from {
                 transform: scale(0)
             }
@@ -102,7 +101,7 @@
         }
 
         /* 100% Image Width on Smaller Screens */
-        @media only screen and (max-width: 700px) {
+        @media  only screen and (max-width: 700px) {
             .modal-content {
                 width: 100%;
             }
@@ -117,41 +116,43 @@
 
             <div class="row pl-3 pr-3 mb-2 mt-5" style="color: white !important">
                 <div class="jm_media col-md-2 p-1 text-center"
-                    style="border-radius: 5px; background-color: @if ($petition->status == 0) #FFDD00 @elseif($petition->status == 1) #FF5A4B @elseif($petition->status == 2) #74FF41 @endif">
-                    @lang('petition.Status'): {{ $petition->getStatus() }}
+                    style="border-radius: 5px; background-color: <?php if($petition->status == 0): ?> #FFDD00 <?php elseif($petition->status == 1): ?> #FF5A4B <?php elseif($petition->status == 2): ?> #74FF41 <?php endif; ?>">
+                    <?php echo app('translator')->get('petition.Status'); ?>: <?php echo e($petition->getStatus()); ?>
+
                 </div>
-                @php
+                <?php
                     $faculty = ('App\Faculty')::find($petition->faculty_id);
-                @endphp
-                @if ($petition->status == 1 && $faculty->status == 1)
-                    <a href="{{ route('petition.edit', ['id' => $petition->id]) }}"
+                ?>
+                <?php if($petition->status == 1 && $faculty->status == 1): ?>
+                    <a href="<?php echo e(route('petition.edit', ['id' => $petition->id])); ?>"
                         class="jm_media col-md-2 p-1 text-center ml-2"
                         style="color:white; border-radius: 5px; background-color: #4997CF">
-                        <i class="fa fa-edit"></i> @lang('petition.Edit')
+                        <i class="fa fa-edit"></i> <?php echo app('translator')->get('petition.Edit'); ?>
                     </a>
-                @endif
-                <a href="{{ route('petition.pdf', ['id' => $petition->id]) }}"
+                <?php endif; ?>
+                <a href="<?php echo e(route('petition.pdf', ['id' => $petition->id])); ?>"
                     class="jm_media col-md-2 p-1 text-center ml-2"
                     style="border-radius: 5px; background-color: #4997CF; color: white !important">
-                    <img src="{{ asset('newadmin/img/tab3.png') }}" alt=""> @lang('petition.Print')
+                    <img src="<?php echo e(asset('newadmin/img/tab3.png')); ?>" alt=""> <?php echo app('translator')->get('petition.Print'); ?>
                 </a>
-                @if ($petition->yangi == 1)
+                <?php if($petition->yangi == 1): ?>
                     <div class="jm_media col-md-2 p-1 text-center"
                         style="border-radius: 5px; background-color: white; color: red;">
-                        {{ $petition->comment }}
+                        <?php echo e($petition->comment); ?>
+
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
             <div class="personal_info">
 
                 <div class="tab_all tab_index" style="border-top: none !important">
                     <ul style="width: 50px; border: none !important;">
-                        <li style="display: none;" class="one act_li"><img src="{{ asset('newadmin/img/tab1.png') }}"
+                        <li style="display: none;" class="one act_li"><img src="<?php echo e(asset('newadmin/img/tab1.png')); ?>"
                                 alt=""></li>
-                        <li style="display: none;" class="one"><img src="{{ asset('newadmin/img/tab2.png') }}"
+                        <li style="display: none;" class="one"><img src="<?php echo e(asset('newadmin/img/tab2.png')); ?>"
                                 alt="">
                         </li>
-                        <li style="display: none;" class="three"><img src="{{ asset('newadmin/img/tab3.png') }}"
+                        <li style="display: none;" class="three"><img src="<?php echo e(asset('newadmin/img/tab3.png')); ?>"
                                 alt="">
                         </li>
                     </ul>
@@ -161,44 +162,44 @@
                             <div class="info_item">
 
                                 <div class="top">
-                                    <h1>@lang('other.PERSONAL INFO')</h1>
+                                    <h1><?php echo app('translator')->get('other.PERSONAL INFO'); ?></h1>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 bor_right">
                                         <div class="row_info">
-                                            <h3>@lang('petition.First name') <b class="error first_name_error"></b></h3>
-                                            <h4>{{ $petition->first_name }} </h4>
+                                            <h3><?php echo app('translator')->get('petition.First name'); ?> <b class="error first_name_error"></b></h3>
+                                            <h4><?php echo e($petition->first_name); ?> </h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Last name')<b class="error last_name_error"></b></h3>
-                                            <h4>{{ $petition->last_name }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Last name'); ?><b class="error last_name_error"></b></h3>
+                                            <h4><?php echo e($petition->last_name); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Father`s name')<b class="error middle_name_error"></b>
+                                            <h3><?php echo app('translator')->get('petition.Father`s name'); ?><b class="error middle_name_error"></b>
                                             </h3>
-                                            <h4> {{ $petition->middle_name }}</h4>
+                                            <h4> <?php echo e($petition->middle_name); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Gender')<b class="error gender_error"></b></h3>
-                                            <h4>{{ $petition->getGender() }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Gender'); ?><b class="error gender_error"></b></h3>
+                                            <h4><?php echo e($petition->getGender()); ?></h4>
                                         </div>
                                     </div>
                                     <div class="col-md-4 bor_right">
                                         <div class="row_info">
-                                            <h3>@lang('petition.Country')<b class="error country_id_error"></b></h3>
-                                            <h4>{{ $petition->getCountry()->$name_l }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Country'); ?><b class="error country_id_error"></b></h3>
+                                            <h4><?php echo e($petition->getCountry()->$name_l); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Region Of Permanent Residence')<b class="error region_id_error"></b></h3>
-                                            <h4>{{ $petition->getRegion()->$name_l }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Region Of Permanent Residence'); ?><b class="error region_id_error"></b></h3>
+                                            <h4><?php echo e($petition->getRegion()->$name_l); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.City Of Permanent Residence')<b class="error area_id_error"></b></h3>
-                                            <h4>{{ $petition->getArea()->$name_l }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.City Of Permanent Residence'); ?><b class="error area_id_error"></b></h3>
+                                            <h4><?php echo e($petition->getArea()->$name_l); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Address')<b class="error address_error"></b></h3>
-                                            <h4>{{ $petition->address }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Address'); ?><b class="error address_error"></b></h3>
+                                            <h4><?php echo e($petition->address); ?></h4>
                                         </div>
 
 
@@ -207,21 +208,21 @@
                                         <div class="info_img">
                                             <div class="row_info_img">
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Citizenship')<b class="error citizenship_error"></b></h3>
-                                                    <h4>{{ $petition->citizenship }}</h4>
+                                                    <h3><?php echo app('translator')->get('petition.Citizenship'); ?><b class="error citizenship_error"></b></h3>
+                                                    <h4><?php echo e($petition->citizenship); ?></h4>
                                                 </div>
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Nationality')<b class="error nationality_error"></b></h3>
-                                                    <h4> {{ $petition->nationality }}</h4>
+                                                    <h3><?php echo app('translator')->get('petition.Nationality'); ?><b class="error nationality_error"></b></h3>
+                                                    <h4> <?php echo e($petition->nationality); ?></h4>
                                                 </div>
                                             </div>
                                             <div style="width: 100%">
                                                 <div class="row_info">
-                                                    <h4>@lang('petition.Image') <b class="error image_error"></b></h4>
+                                                    <h4><?php echo app('translator')->get('petition.Image'); ?> <b class="error image_error"></b></h4>
                                                 </div>
                                                 <div class="row_info_img img " style="width: 100%">
 
-                                                    <img src="{{ asset('users/documents/image') }}/{{ $petition->image }}"
+                                                    <img src="<?php echo e(asset('users/documents/image')); ?>/<?php echo e($petition->image); ?>"
                                                         alt="">
 
                                                 </div>
@@ -237,33 +238,33 @@
                                             <div class="info_img info_img_order">
                                                 <div style="width: 100%">
                                                     <div class="row_info">
-                                                        <h4>@lang('petition.Passport image') <b class="error passport_image_error"></b>
+                                                        <h4><?php echo app('translator')->get('petition.Passport image'); ?> <b class="error passport_image_error"></b>
                                                         </h4>
                                                     </div>
                                                     <div class="row_info_img img" style="width: 100%;">
-                                                        @if (
+                                                        <?php if(
                                                             !empty($petition->passport_image) &&
                                                                 mime_content_type(public_path() . '/users/documents/passport_images/' . $petition->passport_image) ==
-                                                                    'application/pdf')
+                                                                    'application/pdf'): ?>
                                                             <iframe id="iframePdf"
                                                                 style="display: block; width: 100%; height: auto"
-                                                                src="{{ asset('users/documents/passport_images') }}/{{ $petition->passport_image }}"
+                                                                src="<?php echo e(asset('users/documents/passport_images')); ?>/<?php echo e($petition->passport_image); ?>"
                                                                 class="profile-pic6-pdf" src=""></iframe>
                                                             <a
-                                                                href="{{ asset('users/documents/passport_images') }}/{{ $petition->passport_image }}">Yuklab
+                                                                href="<?php echo e(asset('users/documents/passport_images')); ?>/<?php echo e($petition->passport_image); ?>">Yuklab
                                                                 olish <i class="fa fa-download"></i></a>
-                                                        @else
-                                                            <img src="{{ asset('users/documents/passport_images') }}/{{ $petition->passport_image }}"
+                                                        <?php else: ?>
+                                                            <img src="<?php echo e(asset('users/documents/passport_images')); ?>/<?php echo e($petition->passport_image); ?>"
                                                                 alt="">
-                                                        @endif
+                                                        <?php endif; ?>
 
                                                     </div>
                                                 </div>
                                                 <div class="row_info_img pl-md-3">
                                                     <div class="row_info">
-                                                        <h3>@lang('petition.Passport seria and number')<b class="error passport_seria_error"></b>
+                                                        <h3><?php echo app('translator')->get('petition.Passport seria and number'); ?><b class="error passport_seria_error"></b>
                                                         </h3>
-                                                        <h4>{{ $petition->passport_seria }}</h4>
+                                                        <h4><?php echo e($petition->passport_seria); ?></h4>
                                                     </div>
 
                                                 </div>
@@ -272,21 +273,21 @@
                                         </div>
                                         <div class="col-md-6 bor_right">
                                             <div class="row_info">
-                                                <h3>@lang('petition.Home phone number')<b class="error home_phone_error"></b></h3>
-                                                <h4> {{ $petition->home_phone }}</h4>
+                                                <h3><?php echo app('translator')->get('petition.Home phone number'); ?><b class="error home_phone_error"></b></h3>
+                                                <h4> <?php echo e($petition->home_phone); ?></h4>
                                             </div>
                                             <div class="row_info">
-                                                <h3>@lang('petition.Mobile phone number')<b class="error mobile_phone_error"></b></h3>
-                                                <h4>{{ $petition->mobile_phone }}</h4>
+                                                <h3><?php echo app('translator')->get('petition.Mobile phone number'); ?><b class="error mobile_phone_error"></b></h3>
+                                                <h4><?php echo e($petition->mobile_phone); ?></h4>
                                             </div>
                                             <div class="row_info">
-                                                <h3>@lang('petition.Father`s phone number')<b class="error father_phone_error"></b></h3>
-                                                <h4>{{ $petition->father_phone }}</h4>
+                                                <h3><?php echo app('translator')->get('petition.Father`s phone number'); ?><b class="error father_phone_error"></b></h3>
+                                                <h4><?php echo e($petition->father_phone); ?></h4>
 
                                             </div>
                                             <div class="row_info">
-                                                <h3>@lang('petition.Mother`s phone number')<b class="error mother_phone_error"></b></h3>
-                                                <h4>{{ $petition->mother_phone }}</h4>
+                                                <h3><?php echo app('translator')->get('petition.Mother`s phone number'); ?><b class="error mother_phone_error"></b></h3>
+                                                <h4><?php echo e($petition->mother_phone); ?></h4>
                                             </div>
 
                                         </div>
@@ -304,12 +305,12 @@
 
                 <div class="tab_all tab_index" style="border-top: none !important">
                     <ul style="width: 50px; border: none !important;">
-                        <li style="display: none;" class="one act_li"><img src="{{ asset('newadmin/img/tab1.png') }}"
+                        <li style="display: none;" class="one act_li"><img src="<?php echo e(asset('newadmin/img/tab1.png')); ?>"
                                 alt=""></li>
-                        <li style="display: none;" class="one"><img src="{{ asset('newadmin/img/tab2.png') }}"
+                        <li style="display: none;" class="one"><img src="<?php echo e(asset('newadmin/img/tab2.png')); ?>"
                                 alt="">
                         </li>
-                        <li style="display: none;" class="three"><img src="{{ asset('newadmin/img/tab3.png') }}"
+                        <li style="display: none;" class="three"><img src="<?php echo e(asset('newadmin/img/tab3.png')); ?>"
                                 alt="">
                         </li>
                     </ul>
@@ -319,25 +320,25 @@
                         <aside class="active">
                             <div class="info_item">
                                 <div class="top">
-                                    <h1>@lang('other.EDUCATION INFORMATION')</h1>
+                                    <h1><?php echo app('translator')->get('other.EDUCATION INFORMATION'); ?></h1>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 bor_right">
                                         <div class="row_info">
-                                            <h3>@lang('petition.Name of school or number')<b class="error"></b></h3>
-                                            <h4>{{ $petition->school }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Name of school or number'); ?><b class="error"></b></h3>
+                                            <h4><?php echo e($petition->school); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Type school')<b class="error"></b></h3>
-                                            <h4>{{ $petition->getTypeschool()->$name_l }} </h4>
+                                            <h3><?php echo app('translator')->get('petition.Type school'); ?><b class="error"></b></h3>
+                                            <h4><?php echo e($petition->getTypeschool()->$name_l); ?> </h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Graduation date')<b class="error"></b></h3>
-                                            <h4>{{ $petition->graduation_date }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Graduation date'); ?><b class="error"></b></h3>
+                                            <h4><?php echo e($petition->graduation_date); ?></h4>
                                         </div>
                                         <div class="row_info">
-                                            <h3>@lang('petition.Diploma number')<b class="error"></b></h3>
-                                            <h4>{{ $petition->diplom_number }}</h4>
+                                            <h3><?php echo app('translator')->get('petition.Diploma number'); ?><b class="error"></b></h3>
+                                            <h4><?php echo e($petition->diplom_number); ?></h4>
                                         </div>
                                     </div>
 
@@ -346,24 +347,24 @@
 
                                             <div style="width: 100%">
                                                 <div class="row_info">
-                                                    <h4>@lang('petition.Diplom image') <b class="error"></b></h4>
+                                                    <h4><?php echo app('translator')->get('petition.Diplom image'); ?> <b class="error"></b></h4>
                                                 </div>
                                                 <div class="row_info_img img mr-md-3" style="width: 90%;">
-                                                    @if (
+                                                    <?php if(
                                                         !empty($petition->diplom_image) &&
                                                             mime_content_type(public_path() . '/users/documents/diplom_images/' . $petition->diplom_image) ==
-                                                                'application/pdf')
+                                                                'application/pdf'): ?>
                                                         <iframe id="iframePdf"
                                                             style="display: block; width: 100%; height: auto"
-                                                            src="{{ asset('users/documents/diplom_images') }}/{{ $petition->diplom_image }}"
+                                                            src="<?php echo e(asset('users/documents/diplom_images')); ?>/<?php echo e($petition->diplom_image); ?>"
                                                             class="profile-pic6-pdf" src=""></iframe>
                                                         <a
-                                                            href="{{ asset('users/documents/diplom_images') }}/{{ $petition->diplom_image }}">Yuklab
+                                                            href="<?php echo e(asset('users/documents/diplom_images')); ?>/<?php echo e($petition->diplom_image); ?>">Yuklab
                                                             olish <i class="fa fa-download"></i></a>
-                                                    @else
-                                                        <img src="{{ asset('users/documents/diplom_images') }}/{{ $petition->diplom_image }}"
+                                                    <?php else: ?>
+                                                        <img src="<?php echo e(asset('users/documents/diplom_images')); ?>/<?php echo e($petition->diplom_image); ?>"
                                                             alt="">
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                 </div>
                                             </div>
@@ -375,25 +376,25 @@
 
                                             <div style="width: 100%">
                                                 <div class="row_info">
-                                                    <h4>@lang('petition.Diplom application image') <b class="error"></b>
+                                                    <h4><?php echo app('translator')->get('petition.Diplom application image'); ?> <b class="error"></b>
                                                     </h4>
                                                 </div>
                                                 <div class="row_info_img img mr-md-3" style="width: 90%;">
-                                                    @if (
+                                                    <?php if(
                                                         !empty($petition->diplom_image_app) &&
                                                             mime_content_type(public_path() . '/users/documents/diplom_images/' . $petition->diplom_image_app) ==
-                                                                'application/pdf')
+                                                                'application/pdf'): ?>
                                                         <iframe id="iframePdf"
                                                             style="display: block; width: 100%; height: auto"
-                                                            src="{{ asset('users/documents/diplom_images') }}/{{ $petition->diplom_image_app }}"
+                                                            src="<?php echo e(asset('users/documents/diplom_images')); ?>/<?php echo e($petition->diplom_image_app); ?>"
                                                             class="profile-pic6-pdf" src=""></iframe>
                                                         <a
-                                                            href="{{ asset('users/documents/diplom_images') }}/{{ $petition->diplom_image_app }}">Yuklab
+                                                            href="<?php echo e(asset('users/documents/diplom_images')); ?>/<?php echo e($petition->diplom_image_app); ?>">Yuklab
                                                             olish <i class="fa fa-download"></i></a>
-                                                    @else
-                                                        <img src="{{ asset('users/documents/diplom_images') }}/{{ $petition->diplom_image_app }}"
+                                                    <?php else: ?>
+                                                        <img src="<?php echo e(asset('users/documents/diplom_images')); ?>/<?php echo e($petition->diplom_image_app); ?>"
                                                             alt="">
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                 </div>
                                             </div>
@@ -412,30 +413,31 @@
                                         <div class="info_img">
                                             <div class="row_info_img">
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Talim tashkiloti')<b class="error"></b></h3>
+                                                    <h3><?php echo app('translator')->get('petition.Talim tashkiloti'); ?><b class="error"></b></h3>
                                                     <h4>
-                                                        @if ($petition->high_school)
-                                                            {{ $petition->high_school->$name_l }}
-                                                        @endif
+                                                        <?php if($petition->high_school): ?>
+                                                            <?php echo e($petition->high_school->$name_l); ?>
+
+                                                        <?php endif; ?>
                                                     </h4>
                                                 </div>
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Faculty')<b class="error"></b></h3>
-                                                    <h4>{{ $petition->getFaculty()->$name_l }}</h4>
+                                                    <h3><?php echo app('translator')->get('petition.Faculty'); ?><b class="error"></b></h3>
+                                                    <h4><?php echo e($petition->getFaculty()->$name_l); ?></h4>
                                                 </div>
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Type of Education')<b class="error"></b></h3>
-                                                    <h4> {{ $petition->getEdutype()->$name_l }}</h4>
+                                                    <h3><?php echo app('translator')->get('petition.Type of Education'); ?><b class="error"></b></h3>
+                                                    <h4> <?php echo e($petition->getEdutype()->$name_l); ?></h4>
                                                 </div>
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Language of further education')<b class="error"></b>
+                                                    <h3><?php echo app('translator')->get('petition.Language of further education'); ?><b class="error"></b>
                                                     </h3>
-                                                    <h4>{{ $petition->getLanguagetype()->$name_l }}</h4>
+                                                    <h4><?php echo e($petition->getLanguagetype()->$name_l); ?></h4>
                                                 </div>
                                                 <div class="row_info">
-                                                    <h3>@lang('petition.Edu Years')<b class="error"></b>
+                                                    <h3><?php echo app('translator')->get('petition.Edu Years'); ?><b class="error"></b>
                                                     </h3>
-                                                    <h4>{{ $petition->years }} @lang('custom.year_bakalavr')</h4>
+                                                    <h4><?php echo e($petition->years); ?> <?php echo app('translator')->get('custom.year_bakalavr'); ?></h4>
                                                 </div>
 
 
@@ -471,8 +473,8 @@
         <!-- Modal Caption (Image Text) -->
         <div id="caption"></div>
     </div>
-@endsection
-@section('js')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
     <script type="text/javascript">
         $('.img').click(function() {
             // alert("sdsd");
@@ -524,6 +526,8 @@
             });
         }
 
-        get_edits({{ $petition->id }});
+        get_edits(<?php echo e($petition->id); ?>);
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.for_user_show', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\github_clone\qabul2024_tsul\resources\views/user/pages/petition/show.blade.php ENDPATH**/ ?>

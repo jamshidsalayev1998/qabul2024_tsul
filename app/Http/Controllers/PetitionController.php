@@ -127,8 +127,16 @@ class PetitionController extends Controller
     {
         //         return $request;
         $pat = new Petition();
-        $validator = Validator::make($request->all(), $pat->rules);
+        $rules = $pat->rules;
+        if($request->degree == 1){
+            $rules['years'] = ['required'];
+        }
+        if($request->degree == 2){
+            $rules['english_degree'] = ['required'];
+        }
+        $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
+            // return $validator->errors();
             return back()->withErrors($validator)->withInput();
         } else {
             if (Auth::check() && Auth::user()->role == 0) {
@@ -136,6 +144,7 @@ class PetitionController extends Controller
                 $user = Auth::user();
                 $pet = new Petition();
                 $pet->user_id = $user->id;
+                $pet->years = $request->years;
                 $pet->degree = $request->degree;
                 $pet->last_name = $request->last_name;
                 $pet->first_name = $request->first_name;
@@ -376,11 +385,20 @@ class PetitionController extends Controller
             $i++;
         }
         if ($petition->user_id == Auth::user()->id && Auth::user()->role == 0) {
-            return view('user.pages.petition.show', [
-                'petition' => $petition,
-                'edits' => $a
+            if($petition->degree == 1){
 
-            ]);
+                return view('user.pages.petition.show', [
+                    'petition' => $petition,
+                    'edits' => $a
+
+                ]);
+            }else{
+                return view('user.pages.petition.show_magistr', [
+                    'petition' => $petition,
+                    'edits' => $a
+
+                ]);
+            }
         } else {
             return redirect(route('home'));
         }

@@ -55,6 +55,7 @@ Route::group(
         Route::get('/get-messages/{id}', 'CommentController@get_messages')->name('get_messages');
         Route::get('/get-type-edu/{id}', 'FacultyTypeEduController@get_type_edu')->name('get_type_edu');
         Route::get('/get-type-lang/{id}', 'FacultyTypeLangController@get_type_lang')->name('get_type_lang');
+        Route::get('/get-edu-year/{id}', 'FacultyTypeLangController@get_edu_year')->name('get_edu_year');
         Route::get('/get-noread-messages/{id}', 'CommentController@get_noread_messages')->name('get_noread_messages');
         Route::get('/get-all-noread-messages', 'CommentController@get_all_noread_messages')->name('get_all_noread_messages');
         Route::post('/send-messages', 'CommentController@send_messages')->name('send_messages');

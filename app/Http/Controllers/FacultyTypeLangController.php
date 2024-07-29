@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FacultyEduYear;
 use App\FacultyTypeLang;
 use App\Languagetype;
 use Illuminate\Http\Request;
@@ -16,6 +17,10 @@ class FacultyTypeLangController extends Controller
     public function get_type_lang($id){
         $types = FacultyTypeLang::where('faculty_id' , $id)->pluck('type_language_id');
         $edus = Languagetype::whereIn('id' , $types)->get();
+        return json_encode($edus);
+    }
+    public function get_edu_year($id){
+        $edus = FacultyEduYear::where('faculty_id' , $id)->get();
         return json_encode($edus);
     }
 

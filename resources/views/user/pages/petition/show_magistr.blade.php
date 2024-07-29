@@ -290,7 +290,19 @@
                                             </div>
 
                                         </div>
-
+                                        {{-- <div class="col-md-4">
+                                            <div class="row_info">
+                                                <h3>@lang('petition.Disability status')<b class="error disability_status_id_error"></b></h3>
+                                                <h4>{{ $petition->getDisability()->$name_l }}</h4>
+                                            </div>
+                                            <div class="row_info">
+                                                <h3>@lang('petition.Disability description')<b class="error disability_description_error"></b>
+                                                </h3>
+                                                <textarea name="" id="" disabled cols="30" rows="15">
+                                                    	{{ $petition->disability_description }}
+                                                    </textarea>
+                                            </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -322,7 +334,7 @@
                                     <h1>@lang('other.EDUCATION INFORMATION')</h1>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 bor_right">
+                                    <div class="col-md-3 bor_right">
                                         <div class="row_info">
                                             <h3>@lang('petition.Name of school or number')<b class="error"></b></h3>
                                             <h4>{{ $petition->school }}</h4>
@@ -341,7 +353,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="info_img">
 
                                             <div style="width: 100%">
@@ -370,7 +382,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="info_img">
 
                                             <div style="width: 100%">
@@ -399,15 +411,65 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="info_img ">
+                                            <div style="width: 100%">
+                                                <div class="row_info">
+                                                    <h4>@lang('petition.English image') <b class="error"></b></h4>
+                                                </div>
+                                                <div class="row_info_img img" style="width: 100%;">
+                                                    @if (
+                                                        !empty($petition->english_image) &&
+                                                            mime_content_type(public_path() . '/users/documents/english_images/' . $petition->english_image) ==
+                                                                'application/pdf')
+                                                        <iframe id="iframePdf"
+                                                            style="display: block; width: 100%; height: auto"
+                                                            src="{{ asset('users/documents/english_images') }}/{{ $petition->english_image }}"
+                                                            class="profile-pic6-pdf" src=""></iframe>
+                                                        <a
+                                                            href="{{ asset('users/documents/english_images') }}/{{ $petition->english_image }}">Yuklab
+                                                            olish <i class="fa fa-download"></i></a>
+                                                    @else
+                                                        <img src="{{ asset('users/documents/english_images') }}/{{ $petition->english_image }}"
+                                                            alt="">
+                                                    @endif
 
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
 
                             <div class="info_item mt-md-3">
                                 <div class="row">
-
-                                    <div class="col-md-12">
+                                    <div class="col-md-3 bor_right">
+                                        <div class="row_info_img pl-md-3">
+                                            <div class="row_info">
+                                                <h3>@lang('petition.English degree')<b class="error"></b></h3>
+                                                <h4>{{ $petition->getEndegree()->$name_l }}</h4>
+                                            </div>
+                                            <div class="row_info">
+                                                <h3>@lang('petition.Overall band score')<b class="error"></b></h3>
+                                                <h4>{{ $petition->overall_score_english }}</h4>
+                                            </div>
+                                            <div class="row_info">
+                                                <h3>@lang('petition.IELTS Test Report Form Number (only if IELTS)')
+                                                    <b class="error"></b>
+                                                </h3>
+                                                <h4>{{ $petition->ilts_number }}</h4>
+                                            </div>
+                                            {{-- <div class="row_info">
+                                                <h3>@lang('petition.olympics')<b class="error"></b>
+                                                </h3>
+                                                <h4>{{ $petition->olympics }}</h4>
+                                            </div> --}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
 
                                         <div class="info_img">
                                             <div class="row_info_img">
@@ -432,24 +494,143 @@
                                                     </h3>
                                                     <h4>{{ $petition->getLanguagetype()->$name_l }}</h4>
                                                 </div>
-                                                <div class="row_info">
-                                                    <h3>@lang('petition.Edu Years')<b class="error"></b>
-                                                    </h3>
-                                                    <h4>{{ $petition->years }} @lang('custom.year_bakalavr')</h4>
-                                                </div>
 
 
                                             </div>
-                                            
+                                            {{-- <div style="width: 100%">
+                                                <div class="row_info">
+                                                    <h4>@lang('petition.Tavsiyanoma') <b class="error"></b></h4>
+                                                </div>
+                                                <div class="row_info_img img mr-md-3" style="width: 90%;">
+                                                    @if (!empty($petition->image_recommendation) && mime_content_type(public_path() . '/users/documents/recommendation_images/' . $petition->image_recommendation) == 'application/pdf')
+                                                        <iframe id="iframePdf"
+                                                                style="display: block; width: 100%; height: auto"
+                                                                src="{{ asset('users/documents/recommendation_images') }}/{{ $petition->image_recommendation }}"
+                                                                class="profile-pic6-pdf" src=""></iframe>
+                                                        <a href="{{ asset('users/documents/recommendation_images') }}/{{ $petition->image_recommendation }}">Yuklab
+                                                            olish <i class="fa fa-download"></i></a>
+                                                    @else
+                                                        <img
+                                                            src="{{ asset('users/documents/recommendation_images') }}/{{ $petition->image_recommendation }}"
+                                                            alt="">
+                                                    @endif
+
+                                                </div>
+                                            </div> --}}
                                         </div>
 
 
                                     </div>
+                                    {{-- <div class="col-md-3 bor_right">
+                                        <div class="info_img" style="display: block">
+                                            <div class="row_info">
+                                                <h4>@lang('petition.Mehnat daftarchasi') <b class="error"></b></h4>
+                                            </div>
+                                            <div class="row_info_img img mr-md-3" style="width: 100%;">
+                                                @if (!empty($petition->workbook) && mime_content_type(public_path() . '/users/documents/workbook/' . $petition->workbook) == 'application/pdf')
+                                                    <iframe id="iframePdf"
+                                                            style="display: block; width: 100%; height: auto"
+                                                            src="{{ asset('users/documents/workbook') }}/{{ $petition->workbook }}"
+                                                            class="profile-pic6-pdf" src=""></iframe>
+                                                    <a href="{{ asset('users/documents/workbook') }}/{{ $petition->workbook }}">Yuklab
+                                                        olish <i class="fa fa-download"></i></a>
+                                                @else
+                                                    <img
+                                                        src="{{ asset('users/documents/workbook') }}/{{ $petition->workbook }}"
+                                                        alt="">
+                                                @endif
 
+                                            </div>
+                                        </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
+                            {{-- <div class="info_item mt-md-3">
+                                <div class="row">
+                                    <div class="col-md-4 bor_right">
+                                        <div class="row_info_img pl-md-3">
+                                            <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.Passport tarjima')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/passport_images')}}/{{$petition->passport_copy_translate}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                            <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.Tugilganlik haqida guvohnoma')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/passport_images')}}/{{$petition->birth_certificate_copy}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                            <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.Tugilganlik haqida guvohnoma tarjimasi')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/passport_images')}}/{{$petition->birth_certificate_copy_translate}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                             <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.Talim haqida hujjat tarjima')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/diplom_images')}}/{{$petition->edu_document_copy_translate}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-4 bor_right">
+                                        <div class="info_img" style="display: block">
+                                             <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.086 tibbiyot malumotnomasi')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/med_forms')}}/{{$petition->med_form_copy_086}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                             <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.086 tibbiyot malumotnomasi tarjima')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/med_forms')}}/{{$petition->med_form_copy_086_translate}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                            <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.OIV infektsiyasi yo`qligi to`g`risidagi guvohnoma')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/med_forms')}}/{{$petition->vich_copy}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                            <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.OIV infektsiyasi yo`qligi to`g`risidagi guvohnoma tarjima')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/med_forms')}}/{{$petition->vich_copy_translate}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <div class="info_img" style="display: block">
+                                             <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.063 tibbiyot malumotnomasi')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/med_forms')}}/{{$petition->med_form_copy_063}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <hr>
+                                             <div class="row_info" style="display: flex">
+                                                <h4>@lang('petition.063 tibbiyot malumotnomasi tarjima')<b class="error"></b></h4> &nbsp;&nbsp;
+                                                <a href="{{asset('/users/documents/med_forms')}}/{{$petition->med_form_copy_063_translate}}">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div> --}}
                         </aside>
 
                     </div>

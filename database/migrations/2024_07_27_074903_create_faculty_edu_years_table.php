@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExportsTable extends Migration
+class CreateFacultyEduYearsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateExportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('exports', function (Blueprint $table) {
+        Schema::create('faculty_edu_years', function (Blueprint $table) {
             $table->id();
+            $table->integer('faculty_id');
+            $table->string('years');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateExportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exports');
+        Schema::dropIfExists('faculty_edu_years');
     }
 }

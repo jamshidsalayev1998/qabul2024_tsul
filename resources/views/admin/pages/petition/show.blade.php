@@ -345,6 +345,11 @@
                                     <div class="row">
                                         <div class="col-md-4 bor_right">
                                             <div class="row_info">
+                                                <h3>@lang('petition.Degree')</h3>
+                                                <h4>{{ $petition->degree == 1 ? 'Bakalavr':'Magistr' }}
+                                                </h4>
+                                            </div>
+                                            <div class="row_info">
                                                 <h3>@lang('petition.Name of school or number')</h3>
                                                 <h4>{{ $petition->school }} <i style="color: #FF5F5F;"
                                                                                class="fa fa-exclamation-circle"></i>
@@ -557,7 +562,18 @@
                                                                   rows="10"
                                                                   class="input_hid"> @if(isset($com_mes['type_language_id'])) {{ $com_mes['type_language_id'] }} @endif </textarea>
                                                     </div>
+                                                    @if($petition->degree == 1)
                                                     <div class="row_info">
+                                                        <h3>@lang('petition.Edu Years')</h3>
+                                                        <h4>{{$petition->years}} @lang('custom.year_bakalavr') <i
+                                                                    style="color: #FF5F5F;"
+                                                                    class="fa fa-exclamation-circle"></i></h4>
+                                                        <textarea name="edit[years]" id="" cols="30"
+                                                                  rows="10"
+                                                                  class="input_hid"> @if(isset($com_mes['years'])) {{ $com_mes['years'] }} @endif </textarea>
+                                                    </div>
+                                                    @endif
+                                                    {{-- <div class="row_info">
                                                         <h3>Suhbat tili</h3>
                                                         <h4>{{$petition->conversation_language == '1' ? 'O`zbek':'Rus'}} <i
                                                                     style="color: #FF5F5F;"
@@ -565,10 +581,10 @@
                                                         <textarea name="edit[conversation_language]" id="" cols="30"
                                                                   rows="10"
                                                                   class="input_hid"> @if(isset($com_mes['conversation_language'])) {{ $com_mes['conversation_language'] }} @endif </textarea>
-                                                    </div>
+                                                    </div> --}}
 
                                                 </div>
-                                                <div style="width: 50%">
+                                                {{-- <div style="width: 50%">
                                                     <div class="row_info">
                                                         <h4>@lang('petition.Tavsiyanoma') <i style="color: #FF5F5F;"
                                                                                              class="fa fa-exclamation-circle"></i>
@@ -591,7 +607,7 @@
 
 
                                                     </div>
-                                                </div>
+                                                </div> --}}
 
                                             </div>
 
@@ -600,7 +616,7 @@
 
                                     </div>
                                 </div>
-                                 <div class="info_item mt-md-3">
+                                 {{-- <div class="info_item mt-md-3">
                                     <div class="row">
                                         <div class="col-md-6 bor_right">
                                             <div class="info_img ">
@@ -631,7 +647,6 @@
 
                                                 <div class="row_info_img pl-md-3">
                                                     <div class="row_info " style="display: flex">
-{{--                                                        <h3>@lang('petition.Passport tarjima')</h3>--}}
                                                         <h4>@lang('petition.Passport tarjima')  <i
                                                                     style="color: #FF5F5F;"
                                                                     class="fa fa-exclamation-circle"></i></h4> &nbsp;&nbsp; <a href="{{asset('/users/documents/passport_images')}}/{{$petition->passport_copy_translate}}"> <i class="fa fa-download"></i> </a>
@@ -640,7 +655,6 @@
                                                     </div>
                                                     <hr>
                                                     <div class="row_info " style="display: flex">
-{{--                                                        <h3>@lang('petition.Passport tarjima')</h3>--}}
                                                         <h4>@lang('petition.Tugilganlik haqida guvohnoma')  <i
                                                                     style="color: #FF5F5F;"
                                                                     class="fa fa-exclamation-circle"></i></h4> &nbsp;&nbsp; <a href="{{asset('/users/documents/passport_images')}}/{{$petition->birth_certificate_copy}}"> <i class="fa fa-download"></i> </a>
@@ -649,7 +663,6 @@
                                                     </div>
                                                     <hr>
                                                     <div class="row_info " style="display: flex">
-{{--                                                        <h3>@lang('petition.Passport tarjima')</h3>--}}
                                                         <h4>@lang('petition.Tugilganlik haqida guvohnoma tarjimasi')  <i
                                                                     style="color: #FF5F5F;"
                                                                     class="fa fa-exclamation-circle"></i></h4> &nbsp;&nbsp; <a href="{{asset('/users/documents/passport_images')}}/{{$petition->birth_certificate_copy_translate}}"> <i class="fa fa-download"></i> </a>
@@ -733,7 +746,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                             </aside>

@@ -470,17 +470,47 @@
                             </h2>
                             <select class="form-control" id="faculty" name="faculty_id" style="width: 100%;">
                                 <option value="">-----</option>
+                                @if (old('high_school_id'))
+                                    @php
+                                        $faculties = ('App\Faculty')
+                                            ::where('high_school_id', old('high_school_id'))
+                                            ->get();
+                                    @endphp
+                                @endif
                                 @foreach ($faculties as $item)
                                     <option @if (old('faculty_id') == $item->id) selected @endif
                                         value="{{ $item->id }}">{{ $item->$name_l }}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="divinput">
-                            <h2>@lang('petition.Type of Education') : <span id="edutypewrite" ></span></h2>
+                            <h2>@lang('petition.Type of Education') : <span id="edutypewrite"></span></h2>
                         </div>
                         <div class="divinput">
                             <h2>@lang('petition.Language of further education') : <span id="edulangwrite"></span></h2>
+                        </div>
+                        <div class="divinput">
+                            <h2>@lang('petition.Select Edu Years') <span class="color-red">*</span>
+                                <b>
+                                    @error('years')
+                                        ! {{ $message }}
+                                    @enderror
+                                </b>
+                            </h2>
+                            <select class="form-control" id="years" name="years" style="width: 100%;">
+                                @if (old('faculty_id'))
+                                    @php
+                                        $regions = ('App\FacultyEduYear')
+                                            ::where('faculty_id', old('faculty_id'))
+                                            ->get();
+                                    @endphp
+                                    @foreach ($regions as $item)
+                                        <option @if (old('years') == $item->years) selected @endif
+                                            value="{{ $item->years }}">{{ $item->years }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
 
 
@@ -560,8 +590,31 @@
 @section('js')
     <script type="text/javascript">
         var notf = "@lang('petition.Please select file size smaller from 4Mb')";
+
+        function get_edu_year(id) {
+            var c_id = id;
+            var url = '/get-edu-year/' + c_id;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(result) {
+                    var regions = $.parseJSON(result);
+                    var html = '<option selected >-------</option>';
+                    var locale = '{{ App::getLocale() }}';
+                    var name_l = 'name_' + locale;
+                    $.each(regions, function(key, value) {
+                        html += '<option value="' + value['years'] + '">' + value['years'] +
+                        '</option>';
+                    });
+                    $('#years').html(html);
+                }
+            });
+        }
         $(document).ready(function() {
             $('#faculty').change(function() {
+                var f_id = $(this).val();
+                // alert(f_id);
+                get_edu_year(f_id);
                 var selectedOption = $(this).find('option:selected');
                 var eduType = selectedOption.attr('edutype');
                 var lang = selectedOption.attr('edulang');

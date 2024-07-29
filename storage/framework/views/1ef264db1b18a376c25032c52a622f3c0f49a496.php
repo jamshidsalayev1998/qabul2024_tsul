@@ -684,17 +684,55 @@ unset($__errorArgs, $__bag); ?>
                             </h2>
                             <select class="form-control" id="faculty" name="faculty_id" style="width: 100%;">
                                 <option value="">-----</option>
+                                <?php if(old('high_school_id')): ?>
+                                    <?php
+                                        $faculties = ('App\Faculty')
+                                            ::where('high_school_id', old('high_school_id'))
+                                            ->get();
+                                    ?>
+                                <?php endif; ?>
                                 <?php $__currentLoopData = $faculties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option <?php if(old('faculty_id') == $item->id): ?> selected <?php endif; ?>
                                         value="<?php echo e($item->id); ?>"><?php echo e($item->$name_l); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
+
                         <div class="divinput">
-                            <h2><?php echo app('translator')->get('petition.Type of Education'); ?> : <span id="edutypewrite" ></span></h2>
+                            <h2><?php echo app('translator')->get('petition.Type of Education'); ?> : <span id="edutypewrite"></span></h2>
                         </div>
                         <div class="divinput">
                             <h2><?php echo app('translator')->get('petition.Language of further education'); ?> : <span id="edulangwrite"></span></h2>
+                        </div>
+                        <div class="divinput">
+                            <h2><?php echo app('translator')->get('petition.Select Edu Years'); ?> <span class="color-red">*</span>
+                                <b>
+                                    <?php $__errorArgs = ['years'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        ! <?php echo e($message); ?>
+
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </b>
+                            </h2>
+                            <select class="form-control" id="years" name="years" style="width: 100%;">
+                                <?php if(old('faculty_id')): ?>
+                                    <?php
+                                        $regions = ('App\FacultyEduYear')
+                                            ::where('faculty_id', old('faculty_id'))
+                                            ->get();
+                                    ?>
+                                    <?php $__currentLoopData = $regions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option <?php if(old('years') == $item->years): ?> selected <?php endif; ?>
+                                            value="<?php echo e($item->years); ?>"><?php echo e($item->years); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </select>
                         </div>
 
 
@@ -722,8 +760,31 @@ unset($__errorArgs, $__bag); ?>
 <?php $__env->startSection('js'); ?>
     <script type="text/javascript">
         var notf = "<?php echo app('translator')->get('petition.Please select file size smaller from 4Mb'); ?>";
+
+        function get_edu_year(id) {
+            var c_id = id;
+            var url = '/get-edu-year/' + c_id;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(result) {
+                    var regions = $.parseJSON(result);
+                    var html = '<option selected >-------</option>';
+                    var locale = '<?php echo e(App::getLocale()); ?>';
+                    var name_l = 'name_' + locale;
+                    $.each(regions, function(key, value) {
+                        html += '<option value="' + value['years'] + '">' + value['years'] +
+                        '</option>';
+                    });
+                    $('#years').html(html);
+                }
+            });
+        }
         $(document).ready(function() {
             $('#faculty').change(function() {
+                var f_id = $(this).val();
+                // alert(f_id);
+                get_edu_year(f_id);
                 var selectedOption = $(this).find('option:selected');
                 var eduType = selectedOption.attr('edutype');
                 var lang = selectedOption.attr('edulang');
