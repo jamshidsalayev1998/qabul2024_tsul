@@ -128,10 +128,11 @@ class PetitionController extends Controller
         //         return $request;
         $pat = new Petition();
         $rules = $pat->rules;
-        if($request->degree == 1){
+        if ($request->degree == 1) {
             $rules['years'] = ['required'];
+            $rules['pinfl'] = ['required'];
         }
-        if($request->degree == 2){
+        if ($request->degree == 2) {
             $rules['english_degree'] = ['required'];
         }
         $validator = Validator::make($request->all(), $rules);
@@ -144,6 +145,7 @@ class PetitionController extends Controller
                 $user = Auth::user();
                 $pet = new Petition();
                 $pet->user_id = $user->id;
+                $pet->pinfl = $request->pinfl;
                 $pet->years = $request->years;
                 $pet->degree = $request->degree;
                 $pet->last_name = $request->last_name;
@@ -385,14 +387,14 @@ class PetitionController extends Controller
             $i++;
         }
         if ($petition->user_id == Auth::user()->id && Auth::user()->role == 0) {
-            if($petition->degree == 1){
+            if ($petition->degree == 1) {
 
                 return view('user.pages.petition.show', [
                     'petition' => $petition,
                     'edits' => $a
 
                 ]);
-            }else{
+            } else {
                 return view('user.pages.petition.show_magistr', [
                     'petition' => $petition,
                     'edits' => $a
@@ -571,6 +573,8 @@ class PetitionController extends Controller
                         $pet->status = 0;
                         if ($request->last_name)
                             $pet->last_name = $request->last_name;
+                        if ($request->pinfl)
+                            $pet->pinfl = $request->pinfl;
                         if ($request->first_name)
                             $pet->first_name = $request->first_name;
                         if ($request->middle_name)

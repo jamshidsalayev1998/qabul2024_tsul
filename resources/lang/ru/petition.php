@@ -121,6 +121,10 @@ return [
 
 
 	'Talim tashkilotini tanlang' => 'Высшее учебное заведение',
+    'Select Edu Years' => "Срок обучения",
+    'Zagran passport info' => "Заграничный паспорт",
+    'Oliy ta`lim ma`lumoti' => "Высшее образование",
+    'pinfl' => "Pasport JSHIR raqami"
 
 ];
 

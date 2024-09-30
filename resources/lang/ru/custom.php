@@ -11,6 +11,6 @@ return [
         "1 bosqich – suhbat (Rossiya Federatsiyasi OTMlari uchun “jamiyatshunoslik” va “rus tili” fanlaridan elektron test sinovi)" . PHP_EOL .
         "2 bosqich – O‘zbekiston Respublikasi Oliy ta’lim, fan va innovatsiyalar vazirligi huzuridagi Bilim va malakalarni baholash agentligi tomonidan ta’lim tilidan (rus tili) o‘tkaziladigan test sinovi.",
     'text_magistr' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, praesentium! Delectus praesentium iure molestiae, animi quam tempora quos, debitis illo nam deserunt, laborum consequatur iusto dolore? Pariatur nisi eligendi repellat!",
-    'bakalavr_send_application' => "Bakalavriatga ariza to'ldirish",
-    'magistr_send_application' => "Magistraturaga ariza to'ldirish"
+    'bakalavr_send_application' => "Заполнение заявления на бакалавриат",
+    'magistr_send_application' => "Заполнение заявления в магистратуру"
 ];

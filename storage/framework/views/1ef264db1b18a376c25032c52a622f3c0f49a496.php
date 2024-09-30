@@ -314,6 +314,25 @@ unset($__errorArgs, $__bag); ?>
                                 placeholder="<?php echo app('translator')->get('petition.Example - AA1234567'); ?>" id="passport_seria">
                         </div>
                         <div class="divinput">
+                            <h2><?php echo app('translator')->get('petition.pinfl'); ?> <span class="color-red">*</span>
+                                <b>
+                                    <?php $__errorArgs = ['pinfl'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        ! <?php echo e($message); ?>
+
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </b>
+                            </h2>
+                            <input type="text"   name="pinfl" value="<?php echo e(old('pinfl')); ?>"
+                                id="passport_given_place">
+                        </div>
+                        <div class="divinput">
                             <h2><?php echo app('translator')->get('petition.Passport berilgan joy'); ?> <span class="color-red">*</span>
                                 <b>
                                     <?php $__errorArgs = ['passport_given_place'];

@@ -200,7 +200,7 @@
                 </div>
             </div>
 
-            <div class="form_one passport_seria passport_image">
+            <div class="form_one passport_seria passport_image pinfl">
                 <div class="top">
                     <b>@lang('petition.Passport Information')</b>
                 </div>
@@ -215,6 +215,16 @@
                             </h2>
                             <input type="text" class="in_passport_seria input_disable" name="passport_seria"
                                 value="{{ $petition->passport_seria }}" placeholder="AA1234567" id="passport_seria">
+                        </div>
+                        <div class="divinput pinfl">
+                            <h2>@lang('petition.pinfl') <span class="color-red">*</span> <b id="pinfl">
+                                    @error('pinfl')
+                                        ! {{ $message }}
+                                    @enderror
+                                </b>
+                            </h2>
+                            <input type="text" class="in_pinfl input_disable" name="pinfl"
+                                value="{{ $petition->pinfl }}" id="pinfl">
                         </div>
 
                         <div class="divinput passport_image">

@@ -220,6 +220,17 @@
                                 placeholder="@lang('petition.Example - AA1234567')" id="passport_seria">
                         </div>
                         <div class="divinput">
+                            <h2>@lang('petition.pinfl') <span class="color-red">*</span>
+                                <b>
+                                    @error('pinfl')
+                                        ! {{ $message }}
+                                    @enderror
+                                </b>
+                            </h2>
+                            <input type="text"   name="pinfl" value="{{ old('pinfl') }}"
+                                id="passport_given_place">
+                        </div>
+                        <div class="divinput">
                             <h2>@lang('petition.Passport berilgan joy') <span class="color-red">*</span>
                                 <b>
                                     @error('passport_given_place')

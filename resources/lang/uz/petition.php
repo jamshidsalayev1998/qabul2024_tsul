@@ -118,6 +118,10 @@ return [
     'Ish faoliyati' => 'Mehnat faoliyatim',
     'Suhbat tili' => 'Suhbat o\'tkazish tili',
     '3 yil ishlash majburiyati' => 'Magistraturada o\'qishni tugatgandan so`ng kamida uch yil uzluksiz ishlash majburiyati bilan tanishdim',
+    'Select Edu Years' => "Ta'lim yillari",
+    'Zagran passport info' => "Xorijga chiqish pasporti",
+    'Oliy ta`lim ma`lumoti' => "Oliy ta'lim ma'lumoti",
+    'pinfl' => "Pasport JSHIR raqami"
 
 ];
 
