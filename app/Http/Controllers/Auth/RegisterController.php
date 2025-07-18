@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
@@ -73,6 +74,9 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $code = $this->password_generate(6);
+        if(!App::environment('production')){
+            $code = '111111';
+        }
         $string = 'TDYU - Your password   '.$code.'  Please save it';
         // return $string;
 
@@ -83,8 +87,10 @@ class RegisterController extends Controller
         $phone_send = str_replace('+' , '' , $phone);
 //        return $phone_send;
         $sms_send = new SmsSend();
-        $response = $sms_send->send_one_sms($phone_send , $string);
-        $curl = \curl_init();
+        if(App::environment('production')){
+            $response = $sms_send->send_one_sms($phone_send , $string);
+            $curl = \curl_init();
+        }
         return User::create([
             'email' => $phone,
             'password' => Hash::make($code),
